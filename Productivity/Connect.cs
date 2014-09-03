@@ -40,13 +40,13 @@ namespace Productivity
 				//Find the Tools command bar on the MenuBar command bar:
 				CommandBarControl toolsControl = menuBarCommandBar.Controls[toolsMenuName];
                 CommandBarPopup toolsPopup = (CommandBarPopup)toolsControl;
-                //CommandBars cmdBars = (CommandBars)(_applicationObject.CommandBars);
+                CommandBars cmdBars = (CommandBars)(_applicationObject.CommandBars);
                 //CommandBar vsBarItem = cmdBars["Item"]; //the pop up for clicking a project Item
                 //CommandBar vsBarWebItem = cmdBars["Web Item"];
                 //CommandBar vsBarMultiItem = cmdBars["Cross Project Multi Item"];
                 //CommandBar vsBarFolder = cmdBars["Folder"];
                 //CommandBar vsBarWebFolder = cmdBars["Web Folder"];
-                //CommandBar vsBarProject = cmdBars["Project"]; //the popUpMenu for right clicking a project
+                CommandBar vsBarProject = cmdBars["Project"]; //the popUpMenu for right clicking a project
                 //CommandBar vsBarProjectNode = cmdBars["Project Node"];
 
                 
@@ -55,12 +55,17 @@ namespace Productivity
 				try
 				{
 					//Add a command to the Commands collection:
-					Command command = commands.AddNamedCommand2(_addInInstance, "Productivity", "Productivity", "Executes the command for Productivity", true, 59, ref contextGUIDS, (int)vsCommandStatus.vsCommandStatusSupported+(int)vsCommandStatus.vsCommandStatusEnabled, (int)vsCommandStyle.vsCommandStylePictAndText, vsCommandControlType.vsCommandControlTypeButton);
+					Command command = commands.AddNamedCommand2(_addInInstance, "Productivity", "I am Lazy", "Executes the command for Productivity", true, 59, ref contextGUIDS, (int)vsCommandStatus.vsCommandStatusSupported+(int)vsCommandStatus.vsCommandStatusEnabled, (int)vsCommandStyle.vsCommandStylePictAndText, vsCommandControlType.vsCommandControlTypeButton);
 					//Add a control for the command to the tools menu:
 					if((command != null) && (toolsPopup != null))
 					{
-						command.AddControl(toolsPopup.CommandBar, 1);
+                        //command.AddControl(toolsPopup.CommandBar, 1);
+                        command.AddControl(vsBarProject);
 					}
+                    else if((command != null) && (vsBarProject != null))
+                    {
+                        command.AddControl(vsBarProject);
+                    }
 				}
 				catch(System.ArgumentException)
 				{
